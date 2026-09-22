@@ -1,11 +1,17 @@
 package lucas.labendzs.flagquiz
 
+import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import android.widget.ImageView
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
 
 class MainActivity2 : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,6 +33,23 @@ class MainActivity2 : AppCompatActivity() {
             R.drawable.usa
 
         )
+        val nomesPaises = arrayOf(
+            "Albânia",
+            "Argélia",
+            "Cabo Verde",
+            "Croácia",
+            "Cuba",
+            "Dinamarca",
+            "Grã-Bretanha",
+            "Holanda",
+            "Indonésia",
+            "Panamá",
+            "Portugal",
+            "Catar",
+            "Sri Lanka",
+            "Suécia",
+            "Estados Unidos"
+        )
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main2)
@@ -34,10 +57,41 @@ class MainActivity2 : AppCompatActivity() {
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
-
         }
+        val nomePais = findViewById<EditText>(R.id.editTextText2)
+        var controle = 1
+        var pontuacao=0;
+        var indiceAtual = flags.indices.random()
         val imgFlag: ImageView = findViewById(R.id.imgFlag)
-        val randomFlag = flags.random()
-        imgFlag.setImageResource(randomFlag)
+        imgFlag.setImageResource(flags[indiceAtual])
+        val button: Button = findViewById(R.id.btnConfirma)
+        val resultado: TextView = findViewById(R.id.mensagem)
+        val control: TextView = findViewById(R.id.contador)
+        button.setOnClickListener {
+            control.setText ("${controle+1} de 5")
+            val resposta = nomePais.text.toString().trim()
+
+            if (nomesPaises[indiceAtual].equals(resposta, ignoreCase = true)) {
+                resultado.text = "Acertou!"
+                resultado.setTextColor(Color.rgb(46, 125, 50))
+                pontuacao+=20;
+            } else {
+                resultado.text = "Errou!"
+                resultado.setTextColor(Color.RED)
+            }
+            indiceAtual = flags.indices.random()
+            imgFlag.setImageResource(flags[indiceAtual])
+            nomePais.text.clear()
+            controle++
+            if (controle>5){
+                val intentFinal= Intent(this, MainActivity3::class.java)
+                val nomeUsuario = intent.getStringExtra("usuario").orEmpty()
+                intentFinal.putExtra("usuario",nomeUsuario)
+                intentFinal.putExtra("pontuacao",pontuacao)
+                startActivity(intentFinal)
+                finish()
+            }
+        }
     }
+
 }
