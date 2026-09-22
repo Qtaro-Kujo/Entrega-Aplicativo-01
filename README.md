@@ -8,3 +8,5 @@ Este repositório contém o código e os materiais referentes ao **Aplicativo 01
   GRR20211640
 - **Renan Teles de Oliveira**  
   GRR20246258
+- **Lucas Labendzs**  
+  GRR20245121
