@@ -14,7 +14,7 @@
         android:id="@+id/titulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="FlagQuiz"
+        android:text="🌍 FlagQuiz"
         android:textColor="#1E3A5F"
         android:textSize="32sp"
         android:textStyle="bold"
