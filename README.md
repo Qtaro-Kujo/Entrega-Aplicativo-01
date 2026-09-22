@@ -10,3 +10,5 @@ Este repositório contém o código e os materiais referentes ao **Aplicativo 01
   GRR20246258
 - **Lucas Labendzs**  
   GRR20245121
+  - **Kauan Calegari**  
+  GRR20243595
