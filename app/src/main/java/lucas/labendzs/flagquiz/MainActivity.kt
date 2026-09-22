@@ -8,7 +8,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-
+import android.widget.Toast
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +25,10 @@ class MainActivity : AppCompatActivity() {
         val intent= Intent(this, MainActivity2::class.java)
         val pegaNome=findViewById<EditText>(R.id.nome)
         val nome=pegaNome.text.toString()
+        if (nome.isEmpty()) {
+            Toast.makeText(this, "Digite seu nome para começar!", Toast.LENGTH_SHORT).show()
+            return
+        }
         intent.putExtra("usuario",nome)
         startActivity(intent)
         finish()

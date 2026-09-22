@@ -12,6 +12,7 @@ import android.widget.ImageView
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 
 class MainActivity2 : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,7 +62,9 @@ class MainActivity2 : AppCompatActivity() {
         val nomePais = findViewById<EditText>(R.id.editTextText2)
         var controle = 1
         var pontuacao=0;
-        var indiceAtual = flags.indices.random()
+        val indicesEmbaralhados = flags.indices.shuffled()
+        var posicaoAtual = 0
+        var indiceAtual = indicesEmbaralhados[posicaoAtual]
         val imgFlag: ImageView = findViewById(R.id.imgFlag)
         imgFlag.setImageResource(flags[indiceAtual])
         val button: Button = findViewById(R.id.btnConfirma)
@@ -71,17 +74,27 @@ class MainActivity2 : AppCompatActivity() {
             control.setText ("${controle+1} de 5")
             val resposta = nomePais.text.toString().trim()
 
+            if (resposta.isEmpty()) {
+                Toast.makeText(this, "Por favor, digite uma resposta!", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             if (nomesPaises[indiceAtual].equals(resposta, ignoreCase = true)) {
                 resultado.text = "Acertou!"
                 resultado.setTextColor(Color.rgb(46, 125, 50))
                 pontuacao+=20;
             } else {
-                resultado.text = "Errou!"
+                resultado.text = "Errou, a resposta era: ${nomesPaises[indiceAtual]}!"
                 resultado.setTextColor(Color.RED)
             }
-            indiceAtual = flags.indices.random()
-            imgFlag.setImageResource(flags[indiceAtual])
             nomePais.text.clear()
+
+            if (controle < 5) {
+                posicaoAtual++
+                indiceAtual = indicesEmbaralhados[posicaoAtual]
+                imgFlag.setImageResource(flags[indiceAtual])
+            }
+
             controle++
             if (controle>5){
                 val intentFinal= Intent(this, MainActivity3::class.java)
